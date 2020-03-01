@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="shortcut icon" href="/assets/weather/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/assets/weather/favicon.ico" type="image/x-icon">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>My Weather</title>
+		<link rel="stylesheet" href="/styles/weather.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="timezone_icon">
+				<h1 class="timezone"></h1>
+				<canvas id="icon" width="128" height="128"></canvas>
+			</div>
+			<div class="temperature_section">
+				<h1 class="temp">Loading...</h1>
+				<h3 class="temp_unit"></h3>
+			</div>
+			<div class="description_sec">
+				<h2 class="description"></h2>
+			</div>
+		</div>
+		<script src="/js/lib/skycons.js"></script>
+		<script src="/js/weather.js"></script>
+	</body>
+</html>
