@@ -1,6 +1,6 @@
 window.addEventListener('load', init);
 
-API = `${location.origin}/weather/api/`;
+const API = `${location.origin}/weather/api/`;
 
 async function init() {
 
@@ -11,7 +11,7 @@ async function init() {
 		unitElem: getElem('.temp_unit'),
 		descElem: getElem('.description'),
 		tempSec: getElem('.temperature_section')
-	}
+	};
 
 	main(elements);
 	setInterval(() => main(elements), 1000*60);
@@ -28,16 +28,14 @@ async function main(elements) {
 		}
 	} catch (error) {
 		console.error(error);
-		alert(error.message);
+		alert(error.message || 'Something went wrong');
 	}
 
 
 }
 
 function getLocation() {
-	return new Promise((res, rej) => {
-		navigator.geolocation.getCurrentPosition(res, rej);
-	});
+	return new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
 }
 
 async function getWeather(lat, long) {
@@ -60,17 +58,17 @@ function populateElements(elems, data) {
 function convertTemperature({tempElem, unitElem}, { temperature }) {
 	if(unitElem.textContent === 'C'){
 		let fahrenheit = ((temperature * (9 / 5)) + 32).toFixed(2);
-		unitElem.textContent = 'F'
-		tempElem.textContent = `${fahrenheit}˚`
+		unitElem.textContent = 'F';
+		tempElem.textContent = `${fahrenheit}˚`;
 	}
 	else {
-		unitElem.textContent = 'C'
+		unitElem.textContent = 'C';
 		tempElem.textContent = `${temperature}˚`;
 	}
 }
 
 function setIcon (icon) {
-	var skycons = new Skycons({"color": "white"});
-	skycons.add("icon", Skycons[icon]);
+	var skycons = new Skycons({'color': 'white'});
+	skycons.add('icon', Skycons[icon]);
 	skycons.play();
 }

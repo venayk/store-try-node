@@ -2,7 +2,7 @@ function errorRes (req, res, errors, statusCode=500) {
 	errors = errors instanceof Array ? errors : [errors];
 	let response = { success: false, errors: errors };
 	console.error(`
-[ERROR]:: ${req.originalUrl}
+[ERROR]::${new Date()}:: ${req.originalUrl}
 -> ${statusCode}
 ->\n${JSON.stringify(response, null, 2)}
 \n`);
@@ -13,7 +13,7 @@ function errorRes (req, res, errors, statusCode=500) {
 function successRes (req, res, data={}, statusCode=200) {
 	let response = { success: true, data };
 	console.log(`
-[SUCCESS]:: ${req.originalUrl}
+[SUCCESS]::${new Date()}:: ${req.originalUrl}
 -> ${statusCode}
 ->\n${JSON.stringify(response, null, 2)}
 \n`);
@@ -21,9 +21,9 @@ function successRes (req, res, data={}, statusCode=200) {
 	return res.status(statusCode).json(response);
 }
 
-function notFound(req, res) {
+function notFound(req, res, message) {
 	let errors = [{
-		'message': `'${req.originalUrl}' path not found`
+		'message': message || `'${req.originalUrl}' path not found`
 	}];
 	return errorRes(req, res, errors, 404);
 }

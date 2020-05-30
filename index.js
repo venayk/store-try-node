@@ -25,9 +25,7 @@ app.use(logRequest);
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 
-app.get('', (req, res) => {
-	res.render('index', { _this: parseInt(Math.random()*100) });
-});
+app.get('', (req, res) => res.render('index', { _this: Math.floor(Math.random()*100) }));
 
 app.use('/items', items);
 
@@ -45,5 +43,5 @@ function onError(error) {
 }
 
 function onListening() {
-	console.log('listening');
+	console.log('localhost:3001');
 }

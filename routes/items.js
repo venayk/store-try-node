@@ -1,56 +1,42 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
+const router = require('express').Router();
 
 const Item = require('../models/items');
 const { successRes, errorRes, notFound } = require('../common/response');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 	Item.find({}, { __v: 0 }, (error, docs) => {
-		if(error){
-			return errorRes(req, res, error);
-		}
-		return successRes(req, res, docs, 200);
+		return error ? errorRes(req, res, error) : successRes(req, res, docs, 200);
 	});
 });
 
 router.post('/', (req, res) => {
-	console.log(req.body);
-	let item = new Item({
+	new Item({
 		...req.body,
-		_id: new mongoose.Types.ObjectId(),
 		createdOn: new Date()
-	});
-	item.save((error, data) => {
-		if(error){
-			return errorRes(req, res, error, 500);
-		}
+	}).save((error, data) => {
+		if(error) return errorRes(req, res, error, 500);
 		delete data._doc.__v;
-		return successRes(req, res, data._doc, 200);
+		return successRes(req, res, data._doc, 201);
 	});
 });
 
 router.get('/:id', (req, res) => {
-	let query = {
-		_id: req.params.id
-	};
-	Item.findOne(query,{ __v: 0 }, (error, docs) => {
-		if(!docs){
-			return notFound(req, res);
-		}
-		if(error){
-			return errorRes(req, res, error, 500);
-		}
-		return successRes(req, res, docs, 200);
+	Item.findById(req.params.id, { __v: 0 }, (error, doc) => {
+		if(error) return errorRes(req, res, error, 500);
+		return doc ? successRes(req, res, doc, 200) : notFound(req, res, 'Item not found.');
+	});
+});
+
+router.put('/:id', (req, res) => {
+	Item.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true, projection : { __v: 0 } }, (error, doc) => {
+		if(error) return errorRes(req, res, error, 500);
+		return doc ? successRes(req, res, doc, 200) : notFound(req, res, 'Item not found.');
 	});
 });
 
 router.delete('/:id', (req, res) => {
 	Item.findByIdAndDelete(req.params.id, (error, data) => {
-		if(error){
-			return errorRes(req, res, error, 500);
-		}
-		return successRes(req, res, data, 200);
+		return error ? errorRes(req, res, error, 500) : successRes(req, res, data, 200);
 	});
 });
 
