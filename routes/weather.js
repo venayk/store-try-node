@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const darkSky = new (require('dark-sky-skeleton'))('f6bbdd7845974a62ce9629f5d2c032be', true);
+const darkSky = new (require('dark-sky-skeleton'))(process.env.dark_sky_api_key, true);
 
 const { successRes, errorRes } = require('../common/response');
 

@@ -9,7 +9,7 @@ const items = require('./routes/items');
 const weather = require('./routes/weather');
 const { logRequest } = require('./middleware/requestLogger');
 
-mongoose.connect('mongodb://localhost/storeTry', {
+mongoose.connect(`${process.env.mongo_path}`, {
 	useNewUrlParser: true,
 	autoIndex: false,
 	useFindAndModify: false,
@@ -33,7 +33,7 @@ app.use('/weather', weather);
 
 app.use(notFound);
 
-const server = http.createServer(app).listen(3001);
+const server = http.createServer(app).listen(process.env.port);
 server.on('error', onError);
 server.on('listening', onListening);
 
