@@ -1,8 +1,8 @@
 ### TODO
 - [X] Setup `.env` file.
 - [X] Refactor to `async/await`.
-- [ ] Convert `_id` to `id` on schema level.
-- [ ] Remove `__v`on schema level.
-- [ ] Add mongoose schema validation. `@hapi/joi`.
+- [X] Remove `__v`on schema level.
+- [X] Add mongoose schema validation.
+- [ ] Add Actions workflows on github 
 - [ ] Add views for **Items**.
 - [ ] Separate views and API for **Items**.
